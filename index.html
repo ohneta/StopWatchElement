@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClockElement</title>
+
+  <style>
+    #stopwatch2 {
+      background-color: red;
+    }
+    #stopwatch2::part(start-button) {
+      color: white;
+      background-color: blue;
+    }
+    #stopwatch2::part(stop-button) {
+      color: red;
+      background-color: green;
+    }
+    #stopwatch2::part(clear-button) {
+      color: white;
+      background-color: black;
+    }
+
+    td {
+      padding-top: 10px;
+    }
+  </style>
+
+  <script src="./StopWatchElement.js"></script>
+</head>
+
+<body>
+    <h1>stop-watch</h1>
+
+    <table>
+      <tr>
+        <td>例1: なにも指定なし</td>
+        <td>
+            <my-stop-watch id="stopwatch1"></my-stop-watch>
+        </td>
+      </tr>
+
+      <tr>
+        <td>例2: with CSS</td>
+        <td>
+            <my-stop-watch id="stopwatch2"></my-stop-watch>
+        </td>
+      </tr>
+
+      <tr>
+        <td>例3: ボタン属性 & 外部イベント</td>
+        <td>
+            <my-stop-watch id="stopwatch3" buttons="off"></my-stop-watch>
+        </td>
+      </tr>
+      <tr>
+        <td>ボタン</td>
+        <td>
+          <button id="stopwatch-botton1">onにする</button>
+          <button id="stopwatch-botton2">offにする</button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>イベント</td>
+        <td>
+          <button id="stopwatch-botton3">start event</button>
+          <button id="stopwatch-botton4">stop event</button>
+          <button id="stopwatch-botton5">clear event</button>
+          <button id="stopwatch-botton6">ラップ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>ラップ</td>
+        <td>
+          <ul id="rapList"></ul>
+        </td>
+      </tr>
+
+    </table>
+</body>
+
+<script type="text/javascript">
+  elapsedTimes = [];  // ラップタイム保存用
+
+  const stopwatchElement = document.getElementById('stopwatch3');
+
+  // buttonアクション: ストップウオッチのボタンを表示する (buttons=on)
+  const stopwatchButtonElement1 = document.getElementById('stopwatch-botton1');
+  stopwatchButtonElement1.addEventListener('click', event => {
+      stopwatchElement.setAttribute("buttons", 'on');
+  });
+
+  // buttonアクション: ストップウオッチのボタンを消す (buttons=off)
+  const stopwatchButtonElement2 = document.getElementById('stopwatch-botton2');
+  stopwatchButtonElement2.addEventListener('click', event => {
+      stopwatchElement.setAttribute("buttons", 'off');
+  });
+
+
+  // buttonアクション: カスタムイベント start 発火
+  const stopwatchButtonElement3 = document.getElementById('stopwatch-botton3');
+  stopwatchButtonElement3.addEventListener('click', event => {
+    const startEvent = new CustomEvent("start");
+    stopwatchElement.dispatchEvent(startEvent);
+  });
+
+  // buttonアクション: カスタムイベント stop 発火
+  const stopwatchButtonElement4 = document.getElementById('stopwatch-botton4');
+  stopwatchButtonElement4.addEventListener('click', event => {
+    const stopEvent = new CustomEvent("stop");
+    stopwatchElement.dispatchEvent(stopEvent);
+
+    let timeString = stopwatchElement.elapsedTimeString;
+    console.log(timeString);
+
+    let elapsedTimes = stopwatchElement.elapsedTimes;
+    const hours   = String(elapsedTimes.h).padStart(2, '0');
+    const minutes = String(elapsedTimes.m).padStart(2, '0');
+    const seconds = String(elapsedTimes.s).padStart(2, '0');
+    const millisecond = String(elapsedTimes.ms).padStart(3, '0');
+    timeString = `${hours}時${minutes}分${seconds}秒${millisecond}`;
+    console.log(timeString);
+  });
+
+  // buttonアクション: カスタムイベント clear 発火
+  const stopwatchButtonElement5 = document.getElementById('stopwatch-botton5');
+  stopwatchButtonElement5.addEventListener('click', event => {
+    const clearEvent = new CustomEvent("clear");
+    stopwatchElement.dispatchEvent(clearEvent);
+
+    this.elapsedTimes = [];
+    updateRaps();
+  });
+
+
+  // buttonアクション: ラップ時間取得
+  const stopwatchButtonElement6 = document.getElementById('stopwatch-botton6');
+  stopwatchButtonElement6.addEventListener('click', event => {
+
+    // stopwatchElement.elapsedTimeMS
+    // stopwatchElement.elapsedTimes
+    // stopwatchElement.elapsedTimeString
+    this.elapsedTimes.push(stopwatchElement.elapsedTimeString);
+    updateRaps();
+  });
+
+
+  const updateRaps = () => {
+    const rapListElement = document.getElementById('rapList');
+    rapListElement.innerHTML = this.elapsedTimes.map(item => `<li>${item}</li>`).join("");
+  }
+
+</script>
+
+
+</html>
