@@ -1,5 +1,5 @@
 # ストップウオッチ
-1/100秒単位のストップウオッチ
+1/100秒単位のストップウオッチのカスタムエレメント
 
 ## ファイル名
   StopWatchElement.js
@@ -9,10 +9,10 @@
 ```
 
 ## 要素名
-  my-stop-watch
+  stop-watch
 
 ```javascript
-  <my-stop-watch id="stopwatch"></my-stop-watch>
+  <stop-watch id="stopwatch"></stop-watch>
 ```
 
 ## 属性
@@ -63,15 +63,15 @@
 
 例
 ```css
-    my-stop-watch::part(start-button) {
+    stop-watch::part(start-button) {
       color: white;
       background-color: blue;
     }
-    my-stop-watch::part(stop-button) {
+    stop-watch::part(stop-button) {
       color: red;
       background-color: green;
     }
-    my-stop-watch::part(clear-button) {
+    stop-watch::part(clear-button) {
       color: white;
       background-color: black;
     }
@@ -84,18 +84,18 @@
 <html lang="ja">
 <head>
   <style>
-    #my-stop-watch {
+    #stop-watch {
       background-color: red;
     }
-    #my-stop-watch::part(start-button) {
+    #stop-watch::part(start-button) {
       color: white;
       background-color: blue;
     }
-    #my-stop-watch::part(stop-button) {
+    #stop-watch::part(stop-button) {
       color: red;
       background-color: green;
     }
-    #my-stop-watch::part(clear-button) {
+    #stop-watch::part(clear-button) {
       color: white;
       background-color: black;
     }
@@ -103,7 +103,7 @@
   <script src="./StopWatchElement.js"></script>
 </head>
 <body>
-    <my-stop-watch buttons="on"></my-stop-watch>
+    <stop-watch buttons="on"></stop-watch>
 </body>
 </html>
 ```

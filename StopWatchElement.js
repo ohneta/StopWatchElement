@@ -4,11 +4,11 @@
  * コンストラクタ
  *   StopWatchElement
  * 要素
- *   <my-stop-watch>
- *    名称 my-stop-watch
+ *   <stop-watch>
+ *    名称 stop-watch
  *    例)
- *      <my-stop-watch></my-stop-watch>
- *      <my-stop-watch buttons="off"></my-stop-watch>
+ *      <stop-watch></stop-watch>
+ *      <stop-watch buttons="off"></stop-watch>
  *
  * 属性
  *   buttons  on/off  操作ボタンの表示/非表示
@@ -237,4 +237,5 @@ class StopWatchElement extends HTMLElement {
 
 }
 
-customElements.define('my-stop-watch', StopWatchElement);
+//customElements.define('stop-watch', StopWatchElement);
+customElements.define('stop-watch', StopWatchElement);
